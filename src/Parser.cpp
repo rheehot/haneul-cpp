@@ -34,6 +34,8 @@ template <> int8_t Parser::consume<int8_t>() {
   return this->input_[this->pos_++];
 }
 
+int64_t Parser::parse_integer() { return this->consume<int64_t>(); }
+
 double Parser::parse_double() {
   auto base = this->consume<int64_t>();
   auto exp = this->consume<int64_t>();

@@ -18,6 +18,7 @@ public:
 
   template <class T> T consume();
 
+  int64_t parse_integer();
   double parse_double();
 }; // namespace haneul
 } // namespace haneul
