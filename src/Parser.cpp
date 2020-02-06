@@ -17,7 +17,8 @@ Parser::Parser(const std::string &input_file) {
 template <class T> T Parser::peek(std::size_t n) {
   T result = 0;
 
-  for (int i = 0; i < n; i++) {
+  ;
+  for (std::size_t i = 0; i < n; i++) {
     result += static_cast<T>(this->input_[this->pos_ + i]) << (8 * (n - i - 1));
   }
 
@@ -26,7 +27,7 @@ template <class T> T Parser::peek(std::size_t n) {
 
 template <class T> T Parser::consume(std::size_t n) {
   auto result = this->peek<T>(n);
-  this->pos_ += sizeof(T);
+  this->pos_ += n;
   return result;
 }
 
@@ -47,7 +48,7 @@ double Parser::parse_double() {
   return base * std::pow(2, exp);
 }
 
-std::string Parser::parse_char() {
+char32_t Parser::parse_char() {
   auto head = this->peek<uint8_t>();
   std::size_t count = 0;
 
@@ -61,19 +62,31 @@ std::string Parser::parse_char() {
     count = 4;
   }
 
-  std::string result = "";
-  for (int i = 0; i < count; i++)
-    result += this->consume<int8_t>();
-
-  return result;
+  return this->consume<char32_t>(count);
 }
 
 std::string Parser::parse_string() {
   auto count = this->consume<uint64_t>();
 
   std::string result = "";
-  for (int i = 0; i < count; i++) {
-    result += this->parse_char();
+  for (std::size_t i = 0; i < count; i++) {
+    auto ch = this->parse_char();
+    if (ch == 0) {
+      result += '\0';
+      continue;
+    }
+
+    char bytes[4];
+    bytes[0] = (ch >> 24) & 0xFF;
+    bytes[1] = (ch >> 16) & 0xFF;
+    bytes[2] = (ch >> 8) & 0xFF;
+    bytes[3] = ch & 0xFF;
+
+    for (std::size_t i = 0; i < 4; i++) {
+      if (bytes[i] != 0) {
+        result += bytes[i];
+      }
+    }
   }
 
   return result;

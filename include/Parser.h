@@ -21,7 +21,7 @@ public:
 
   int64_t parse_integer();
   double parse_double();
-  std::string parse_char();
+  char32_t parse_char();
   std::string parse_string();
   bool parse_boolean();
 }; // namespace haneul
