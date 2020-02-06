@@ -3,9 +3,8 @@
 #include "Parser.h"
 
 int main() {
-  haneul::Parser::InputType input = {0,   21,  0,   0,   0,   0,   0,   0,
-                                     255, 255, 255, 255, 255, 255, 255, 207};
+  haneul::Parser::InputType input = {234, 176, 132};
   haneul::Parser parser(input);
-  std::cout << parser.parse_double() << '\n';
+  std::cout << parser.parse_char() << '\n';
   return 0;
 }

@@ -16,9 +16,11 @@ public:
   std::vector<uint8_t> input_;
   std::size_t pos_ = 0;
 
-  template <class T> T consume();
+  template <class T> T peek(std::size_t n = sizeof(T));
+  template <class T> T consume(std::size_t n = sizeof(T));
 
   int64_t parse_integer();
   double parse_double();
+  std::string parse_char();
 }; // namespace haneul
 } // namespace haneul

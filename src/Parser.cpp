@@ -14,23 +14,27 @@ Parser::Parser(const std::string &input_file) {
   this->input_ = content;
 }
 
-template <class T> T Parser::consume() {
+template <class T> T Parser::peek(std::size_t n) {
   T result = 0;
-  const std::size_t result_size = sizeof(T);
 
-  for (int i = 0; i < result_size; i++) {
-    result += static_cast<T>(this->input_[this->pos_++])
-              << (8 * (result_size - i - 1));
+  for (int i = 0; i < n; i++) {
+    result += static_cast<T>(this->input_[this->pos_ + i]) << (8 * (n - i - 1));
   }
 
   return result;
 }
 
-template <> uint8_t Parser::consume<uint8_t>() {
+template <class T> T Parser::consume(std::size_t n) {
+  auto result = this->peek<T>(n);
+  this->pos_ += sizeof(T);
+  return result;
+}
+
+template <> uint8_t Parser::consume<uint8_t>(std::size_t) {
   return this->input_[this->pos_++];
 }
 
-template <> int8_t Parser::consume<int8_t>() {
+template <> int8_t Parser::consume<int8_t>(std::size_t) {
   return this->input_[this->pos_++];
 }
 
@@ -43,4 +47,24 @@ double Parser::parse_double() {
   return base * std::pow(2, exp);
 }
 
+std::string Parser::parse_char() {
+  auto head = this->peek<uint8_t>();
+  std::size_t count = 0;
+
+  if (head < 0x80) {
+    count = 1;
+  } else if (head < 0xE0) {
+    count = 2;
+  } else if (head < 0xF0) {
+    count = 3;
+  } else {
+    count = 4;
+  }
+
+  std::string result = "";
+  for (int i = 0; i < count; i++)
+    result += this->consume<int8_t>();
+
+  return result;
+} // namespace haneul
 } // namespace haneul
