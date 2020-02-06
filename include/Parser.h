@@ -15,5 +15,7 @@ public:
 private:
   std::vector<uint8_t> input_;
   std::size_t pos_;
-};
+
+  template <class T> T consume();
+}; // namespace haneul
 } // namespace haneul

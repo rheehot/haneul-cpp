@@ -11,4 +11,24 @@ Parser::Parser(const std::string &input_file) {
 
   this->input_ = content;
 }
+
+template <class T> T Parser::consume() {
+  T result = 0;
+  const std::size_t result_size = sizeof(T);
+
+  for (int i = 0; i < result_size; i++) {
+    result += this->input_[this->pos_++] << (8 * (result_size - i - 1));
+  }
+
+  return result;
+}
+
+template <> uint8_t Parser::consume<uint8_t>() {
+  return this->input_[this->pos_++];
+}
+
+template <> int8_t Parser::consume<int8_t>() {
+  return this->input_[this->pos_++];
+}
+
 } // namespace haneul
