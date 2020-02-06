@@ -12,10 +12,12 @@ public:
   Parser(const std::string &input_file);
   Parser(const InputType &input) : input_(input) {}
 
-private:
+public:
   std::vector<uint8_t> input_;
-  std::size_t pos_;
+  std::size_t pos_ = 0;
 
   template <class T> T consume();
+
+  double parse_double();
 }; // namespace haneul
 } // namespace haneul

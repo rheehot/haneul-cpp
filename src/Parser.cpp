@@ -1,3 +1,5 @@
+#include <bitset>
+#include <cmath>
 #include <fstream>
 #include <iostream>
 
@@ -17,7 +19,8 @@ template <class T> T Parser::consume() {
   const std::size_t result_size = sizeof(T);
 
   for (int i = 0; i < result_size; i++) {
-    result += this->input_[this->pos_++] << (8 * (result_size - i - 1));
+    result += static_cast<T>(this->input_[this->pos_++])
+              << (8 * (result_size - i - 1));
   }
 
   return result;
@@ -29,6 +32,13 @@ template <> uint8_t Parser::consume<uint8_t>() {
 
 template <> int8_t Parser::consume<int8_t>() {
   return this->input_[this->pos_++];
+}
+
+double Parser::parse_double() {
+  auto base = this->consume<int64_t>();
+  auto exp = this->consume<int64_t>();
+
+  return base * std::pow(2, exp);
 }
 
 } // namespace haneul
