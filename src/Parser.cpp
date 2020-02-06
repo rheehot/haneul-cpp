@@ -66,5 +66,16 @@ std::string Parser::parse_char() {
     result += this->consume<int8_t>();
 
   return result;
-} // namespace haneul
+}
+
+std::string Parser::parse_string() {
+  auto count = this->consume<uint64_t>();
+
+  std::string result = "";
+  for (int i = 0; i < count; i++) {
+    result += this->parse_char();
+  }
+
+  return result;
+}
 } // namespace haneul
