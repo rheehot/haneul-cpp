@@ -78,4 +78,9 @@ std::string Parser::parse_string() {
 
   return result;
 }
+
+bool Parser::parse_boolean() {
+  auto value = this->consume<uint8_t>();
+  return value == 1;
+}
 } // namespace haneul

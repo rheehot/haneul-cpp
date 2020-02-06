@@ -23,5 +23,6 @@ public:
   double parse_double();
   std::string parse_char();
   std::string parse_string();
+  bool parse_boolean();
 }; // namespace haneul
 } // namespace haneul
