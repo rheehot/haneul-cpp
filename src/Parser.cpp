@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "Parser.h"
+#include "Parser.hpp"
 
 namespace haneul {
 Parser::Parser(const std::string &input_file) {

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Parser.h"
+#include "Parser.hpp"
 
 int main() {
   haneul::Parser::InputType input = {0, 0, 0, 5, 2, 0,   0,   0,

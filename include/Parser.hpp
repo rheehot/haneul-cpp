@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "Insturction.h"
+#include "Insturction.hpp"
 
 namespace haneul {
 class Parser {

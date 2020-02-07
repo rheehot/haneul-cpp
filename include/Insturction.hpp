@@ -2,7 +2,7 @@
 #include <string>
 #include <variant>
 
-#include "Dumpable.h"
+#include "Dumpable.hpp"
 
 namespace haneul {
 enum class Opcode : uint8_t {
