@@ -1,11 +1,17 @@
 #pragma once
 #include <memory>
+#include <string>
 
 namespace haneul {
+enum class ConstantType { None, Integer };
+
+std::string type_to_string(ConstantType type);
+
 class Constant {
-public:
+private:
   using ConstantPtr = std::unique_ptr<Constant>;
 
+public:
   virtual ConstantPtr add(ConstantPtr other) = 0;
   virtual ConstantPtr subtract(ConstantPtr other) = 0;
   virtual ConstantPtr multiply(ConstantPtr other) = 0;
