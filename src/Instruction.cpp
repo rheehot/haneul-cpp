@@ -6,7 +6,14 @@
 
 namespace haneul {
 void Instruction::dump() {
-  std::cout << "Instruction(" << this->line_number_ << ", "
-            << magic_enum::enum_name(this->opcode_) << ")" << std::endl;
+  std::cout << this->line_number_ << " | Inst."
+            << magic_enum::enum_name(this->opcode_);
+  if (std::holds_alternative<uint64_t>(this->operand_)) {
+    std::cout << ' ' << std::get<uint64_t>(this->operand_);
+  } else if (std::holds_alternative<std::string>(this->operand_)) {
+    std::cout << " \"" << std::get<std::string>(this->operand_) << "\"";
+  }
+
+  std::cout << std::endl;
 }
 } // namespace haneul

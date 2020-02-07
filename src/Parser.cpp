@@ -113,12 +113,12 @@ Instruction Parser::parse_instruction() {
     break;
 
   case Opcode::Store:
-  case Opcode::Load:
+  case Opcode::Load: // 문자열 operand를 가지는 인스트럭션들
     operand = this->parse_string();
     break;
 
   default:
-    operand = 0;
+    operand = std::monostate();
   }
 
   return Instruction(line_number, opcode, operand);
