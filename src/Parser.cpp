@@ -96,4 +96,31 @@ bool Parser::parse_boolean() {
   auto value = this->consume<uint8_t>();
   return value == 1;
 }
+
+Instruction Parser::parse_instruction() {
+  auto line_number = this->consume<uint32_t>();
+  auto opcode_index = this->consume<uint8_t>();
+
+  auto opcode = static_cast<Opcode>(opcode_index);
+  Instruction::OperandType operand;
+
+  switch (opcode) {
+  case Opcode::Push:
+  case Opcode::Call:
+  case Opcode::Jmp:
+  case Opcode::PopJmpIfFalse: // 정수형 operand를 가지는 인스트럭션들
+    operand = this->consume<uint32_t>();
+    break;
+
+  case Opcode::Store:
+  case Opcode::Load:
+    operand = this->parse_string();
+    break;
+
+  default:
+    operand = 0;
+  }
+
+  return Instruction(line_number, opcode, operand);
+}
 } // namespace haneul

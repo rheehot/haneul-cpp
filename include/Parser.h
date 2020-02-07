@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "Insturction.h"
+
 namespace haneul {
 class Parser {
 public:
@@ -24,5 +26,7 @@ public:
   char32_t parse_char();
   std::string parse_string();
   bool parse_boolean();
+
+  Instruction parse_instruction();
 }; // namespace haneul
 } // namespace haneul

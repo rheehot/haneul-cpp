@@ -3,7 +3,7 @@
 #include <variant>
 
 namespace haneul {
-enum class Opcode {
+enum class Opcode : uint8_t {
   Push,
   Pop,
   Store,
@@ -26,10 +26,11 @@ enum class Opcode {
 class Instruction {
 public:
   using OperandType = std::variant<std::string, uint64_t>;
-  Instruction(Opcode opcode, OperandType operand)
-      : opcode_(opcode), operand_(operand) {}
+  Instruction(uint32_t line_number, Opcode opcode, OperandType operand)
+      : line_number_(line_number), opcode_(opcode), operand_(operand) {}
 
 private:
+  uint32_t line_number_;
   Opcode opcode_;
   OperandType operand_;
 };
