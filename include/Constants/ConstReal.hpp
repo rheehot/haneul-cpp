@@ -1,13 +1,10 @@
 #include "Constant.hpp"
+#include "Value.hpp"
 
 namespace haneul {
-class ConstReal : public Constant {
-private:
-  using ValueType = double;
-  ValueType value_;
-
+class ConstReal : public Constant, public Value<double> {
 public:
-  ConstReal(ValueType value) : Constant(ConstantType::Real), value_(value) {}
+  ConstReal(ValueType value) : Constant(ConstantType::Real), Value(value) {}
 
   Constant operator+(ConstantPtr other) const override;
   Constant operator-(ConstantPtr other) const override;

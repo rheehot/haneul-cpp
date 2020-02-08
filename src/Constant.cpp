@@ -9,6 +9,8 @@ std::string type_to_string(const ConstantType &type) {
     return "정수";
   case ConstantType::Boolean:
     return "부울";
+  case ConstantType::Real:
+    return "실수";
   }
 }
 
