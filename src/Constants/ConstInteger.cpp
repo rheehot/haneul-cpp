@@ -24,6 +24,10 @@ Constant ConstInteger::operator-(ConstantPtr other) const {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value - derived->value);
   }
+  case ConstantType::Real: {
+    auto derived = dynamic_cast<const ConstReal *>(other);
+    return ConstReal(this->value - derived->value);
+  }
   default:
     throw make_binary_type_exception(this->type_, other->get_type(), "빼기");
   }
@@ -35,6 +39,10 @@ Constant ConstInteger::operator*(ConstantPtr other) const {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value * derived->value);
   }
+  case ConstantType::Real: {
+    auto derived = dynamic_cast<const ConstReal *>(other);
+    return ConstReal(this->value * derived->value);
+  }
   default:
     throw make_binary_type_exception(this->type_, other->get_type(), "곱하기");
   }
@@ -45,6 +53,10 @@ Constant ConstInteger::operator/(ConstantPtr other) const {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value / derived->value);
+  }
+  case ConstantType::Real: {
+    auto derived = dynamic_cast<const ConstReal *>(other);
+    return ConstReal(this->value / derived->value);
   }
   default:
     throw make_binary_type_exception(this->type_, other->get_type(), "나누기");
@@ -69,7 +81,7 @@ Constant ConstInteger::operator==(ConstantPtr other) const {
     return ConstBoolean(this->value == derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(), "비교");
+    return ConstBoolean(false);
   }
 }
 
@@ -77,6 +89,10 @@ Constant ConstInteger::operator<(ConstantPtr other) const {
   switch (other->get_type()) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
+    return ConstBoolean(this->value < derived->value);
+  }
+  case ConstantType::Real: {
+    auto derived = dynamic_cast<const ConstReal *>(other);
     return ConstBoolean(this->value < derived->value);
   }
   default:
@@ -89,6 +105,10 @@ Constant ConstInteger::operator>(ConstantPtr other) const {
   switch (other->get_type()) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
+    return ConstBoolean(this->value > derived->value);
+  }
+  case ConstantType::Real: {
+    auto derived = dynamic_cast<const ConstReal *>(other);
     return ConstBoolean(this->value > derived->value);
   }
   default:
