@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Parser.hpp"
+#include "Util.hpp"
 
 namespace haneul {
 Parser::Parser(const std::string &input_file) {
@@ -71,22 +72,7 @@ std::string Parser::parse_string() {
   std::string result = "";
   for (std::size_t i = 0; i < count; i++) {
     auto ch = this->parse_char();
-    if (ch == 0) {
-      result += '\0';
-      continue;
-    }
-
-    char bytes[4];
-    bytes[0] = (ch >> 24) & 0xFF;
-    bytes[1] = (ch >> 16) & 0xFF;
-    bytes[2] = (ch >> 8) & 0xFF;
-    bytes[3] = ch & 0xFF;
-
-    for (std::size_t i = 0; i < 4; i++) {
-      if (bytes[i] != 0) {
-        result += bytes[i];
-      }
-    }
+    result += util::char32_to_string(ch);
   }
 
   return result;

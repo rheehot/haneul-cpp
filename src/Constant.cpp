@@ -11,6 +11,8 @@ std::string type_to_string(const ConstantType &type) {
     return "부울";
   case ConstantType::Real:
     return "실수";
+  case ConstantType::Char:
+    return "문자";
   }
 }
 
