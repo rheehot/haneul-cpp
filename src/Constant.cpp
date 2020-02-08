@@ -7,6 +7,8 @@ std::string type_to_string(const ConstantType &type) {
     return "(없음)";
   case ConstantType::Integer:
     return "정수";
+  case ConstantType::Boolean:
+    return "부울";
   }
 }
 

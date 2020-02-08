@@ -5,7 +5,7 @@
 #include "Exception.hpp"
 
 namespace haneul {
-enum class ConstantType { None, Integer };
+enum class ConstantType { None, Integer, Boolean };
 
 TypeException make_binary_type_exception(ConstantType lhs, ConstantType rhs,
                                          const std::string &operation);
