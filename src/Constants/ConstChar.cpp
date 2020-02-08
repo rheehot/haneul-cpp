@@ -16,6 +16,30 @@ Constant ConstChar::operator==(ConstantPtr other) const {
   }
 }
 
+Constant ConstChar::operator<(ConstantPtr other) const {
+  switch (other->get_type()) {
+  case ConstantType::Char: {
+    auto derived = dynamic_cast<const ConstChar *>(other);
+    return ConstBoolean(this->value < derived->value);
+  }
+  default:
+    throw make_binary_type_exception(this->type_, other->get_type(),
+                                     "대소 비교");
+  }
+}
+
+Constant ConstChar::operator>(ConstantPtr other) const {
+  switch (other->get_type()) {
+  case ConstantType::Char: {
+    auto derived = dynamic_cast<const ConstChar *>(other);
+    return ConstBoolean(this->value > derived->value);
+  }
+  default:
+    throw make_binary_type_exception(this->type_, other->get_type(),
+                                     "대소 비교");
+  }
+}
+
 std::string ConstChar::show() const {
   return util::char32_to_string(this->value);
 }
