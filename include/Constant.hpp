@@ -2,26 +2,35 @@
 #include <memory>
 #include <string>
 
+#include "Exception.hpp"
+
 namespace haneul {
 enum class ConstantType { None, Integer };
 
 std::string type_to_string(ConstantType type);
+TypeException make_binary_type_exception(ConstantType lhs, ConstantType rhs,
+                                         const std::string &operation);
+TypeException make_unary_type_exception(ConstantType type,
+                                        const std::string &operation);
 
 class Constant {
 private:
-  using ConstantPtr = std::unique_ptr<Constant>;
+  using ConstantPtr = const std::unique_ptr<Constant> &;
+  const ConstantType type_;
 
 public:
-  virtual ConstantPtr add(ConstantPtr other) = 0;
-  virtual ConstantPtr subtract(ConstantPtr other) = 0;
-  virtual ConstantPtr multiply(ConstantPtr other) = 0;
-  virtual ConstantPtr divide(ConstantPtr other) = 0;
-  virtual ConstantPtr mod(ConstantPtr other) = 0;
-  virtual ConstantPtr equal(ConstantPtr other) = 0;
-  virtual ConstantPtr less_than(ConstantPtr other) = 0;
-  virtual ConstantPtr greater_than(ConstantPtr other) = 0;
+  Constant(ConstantType type) : type_(type) {}
 
-  virtual ConstantPtr negate() = 0;
-  virtual std::string show() = 0;
+  virtual Constant operator+(const Constant &other);
+  virtual Constant operator-(const Constant &other);
+  virtual Constant operator*(const Constant &other);
+  virtual Constant operator/(const Constant &other);
+  virtual Constant operator%(const Constant &other);
+  virtual Constant operator==(const Constant &other);
+  virtual Constant operator<(const Constant &other);
+  virtual Constant operator>(const Constant &other);
+
+  virtual Constant operator-();
+  virtual std::string show();
 };
 } // namespace haneul
