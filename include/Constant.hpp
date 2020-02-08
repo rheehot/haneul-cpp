@@ -7,30 +7,35 @@
 namespace haneul {
 enum class ConstantType { None, Integer };
 
-std::string type_to_string(ConstantType type);
 TypeException make_binary_type_exception(ConstantType lhs, ConstantType rhs,
                                          const std::string &operation);
 TypeException make_unary_type_exception(ConstantType type,
                                         const std::string &operation);
 
+class Constant;
+
+using ConstantPtr = const Constant *const;
+
 class Constant {
-private:
-  using ConstantPtr = const std::unique_ptr<Constant> &;
+protected:
   const ConstantType type_;
 
 public:
   Constant(ConstantType type) : type_(type) {}
 
-  virtual Constant operator+(const Constant &other);
-  virtual Constant operator-(const Constant &other);
-  virtual Constant operator*(const Constant &other);
-  virtual Constant operator/(const Constant &other);
-  virtual Constant operator%(const Constant &other);
-  virtual Constant operator==(const Constant &other);
-  virtual Constant operator<(const Constant &other);
-  virtual Constant operator>(const Constant &other);
+  ConstantType get_type() const noexcept { return this->type_; }
 
-  virtual Constant operator-();
-  virtual std::string show();
+  virtual Constant operator+(ConstantPtr other) const;
+  virtual Constant operator-(ConstantPtr other) const;
+  virtual Constant operator*(ConstantPtr other) const;
+  virtual Constant operator/(ConstantPtr other) const;
+  virtual Constant operator%(ConstantPtr other) const;
+  virtual Constant operator==(ConstantPtr other) const;
+  virtual Constant operator<(ConstantPtr other) const;
+  virtual Constant operator>(ConstantPtr other) const;
+
+  virtual Constant operator-() const;
+  virtual std::string show() const;
 };
+
 } // namespace haneul

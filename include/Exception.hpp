@@ -17,5 +17,7 @@ public:
   uint32_t get_line_number() const noexcept;
 };
 
-class TypeException : public HaneulException {};
+class TypeException : public HaneulException {
+  using HaneulException::HaneulException;
+};
 } // namespace haneul
