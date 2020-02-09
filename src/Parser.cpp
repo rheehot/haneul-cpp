@@ -133,4 +133,16 @@ ConstantPtr Parser::parse_constant() {
     return std::make_unique<ConstBoolean>(this->parse_boolean());
   }
 }
+
+template <class R>
+std::vector<R> Parser::parse_list(std::function<R()> parse_func) {
+  auto count = this->consume<uint64_t>();
+  std::vector<R> result;
+
+  for (std::size_t i = 0; i < count; i++) {
+    result.push_back(parse_func());
+  }
+
+  return result;
+}
 } // namespace haneul

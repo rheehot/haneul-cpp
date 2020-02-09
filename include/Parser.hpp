@@ -1,6 +1,7 @@
 #pragma once
 #include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -30,5 +31,7 @@ public:
 
   Instruction parse_instruction();
   ConstantPtr parse_constant();
+
+  template <class R> std::vector<R> parse_list(std::function<R()> parse_func);
 };
 } // namespace haneul
