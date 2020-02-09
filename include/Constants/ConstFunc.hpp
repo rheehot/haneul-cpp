@@ -1,25 +1,20 @@
-#include <map>
-#include <string>
-#include <vector>
-
 #include "Constant.hpp"
+#include "FuncObject.hpp"
 #include "Insturction.hpp"
 #include "Value.hpp"
 
 namespace haneul {
 
-class FuncObject {
-private:
-  std::vector<std::string> arg_names_;
-  Code code_;
-  std::vector<Constant> const_table_;
-};
-
 class ConstFunc : public Constant, public Value<FuncObject> {
 public:
-  ConstFunc(ValueType value) : Constant(ConstantType::Function), Value(value) {}
+  ConstFunc(ValueType value)
+      : Constant(ConstantType::Function), Value(std::move(value)) {}
 
   void dump() const override;
+
+  ConstFunc(ConstFunc &&) = default;
+  ConstFunc(const ConstFunc &) = delete;
+  ConstFunc &operator=(const ConstFunc &) = delete;
 };
 
 } // namespace haneul

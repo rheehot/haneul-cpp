@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Constant.hpp"
+#include "Constants/FuncObject.hpp"
 #include "Insturction.hpp"
 
 namespace haneul {
@@ -28,10 +29,12 @@ public:
   char32_t parse_char();
   std::string parse_string();
   bool parse_boolean();
+  FuncObject parse_func_object();
 
   Instruction parse_instruction();
   ConstantPtr parse_constant();
 
-  template <class R> std::vector<R> parse_list(std::function<R()> parse_func);
+  template <class Functor>
+  std::vector<std::invoke_result_t<Functor>> parse_list(Functor parse_func);
 };
 } // namespace haneul

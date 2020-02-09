@@ -8,6 +8,7 @@
 
 #include "Constants/ConstBoolean.hpp"
 #include "Constants/ConstChar.hpp"
+#include "Constants/ConstFunc.hpp"
 #include "Constants/ConstInteger.hpp"
 #include "Constants/ConstNone.hpp"
 #include "Constants/ConstReal.hpp"
@@ -89,6 +90,14 @@ bool Parser::parse_boolean() {
   return value == 1;
 }
 
+FuncObject Parser::parse_func_object() {
+  auto arg_names = this->parse_list([&] { return parse_string(); });
+  auto const_table = this->parse_list([&] { return parse_constant(); });
+  auto code = this->parse_list([&] { return parse_instruction(); });
+
+  return FuncObject(arg_names, code, std::move(const_table));
+}
+
 Instruction Parser::parse_instruction() {
   auto line_number = this->consume<uint32_t>();
   auto opcode_index = this->consume<uint8_t>();
@@ -131,16 +140,22 @@ ConstantPtr Parser::parse_constant() {
     return std::make_unique<ConstChar>(this->parse_char());
   case ConstantType::Boolean:
     return std::make_unique<ConstBoolean>(this->parse_boolean());
+  case ConstantType::Function:
+    return std::make_unique<ConstFunc>(this->parse_func_object());
   }
 }
 
-template <class R>
-std::vector<R> Parser::parse_list(std::function<R()> parse_func) {
+template <class Functor>
+std::vector<std::invoke_result_t<Functor>>
+Parser::parse_list(Functor parse_func) {
+  using ResultType = std::invoke_result_t<Functor>;
+  static_assert(std::is_invocable_v<Functor>);
+
   auto count = this->consume<uint64_t>();
-  std::vector<R> result;
+  std::vector<ResultType> result;
 
   for (std::size_t i = 0; i < count; i++) {
-    result.push_back(parse_func());
+    result.push_back(std::forward<ResultType>(parse_func()));
   }
 
   return result;

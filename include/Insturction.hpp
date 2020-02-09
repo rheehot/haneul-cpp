@@ -26,7 +26,7 @@ enum class Opcode : uint8_t {
   Negate
 };
 
-class Instruction : public Dumpable {
+class Instruction final : public Dumpable {
 public:
   using OperandType = std::variant<std::monostate, std::string, uint64_t>;
   Instruction(uint32_t line_number, Opcode opcode, OperandType operand)
