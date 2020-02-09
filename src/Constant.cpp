@@ -30,39 +30,39 @@ TypeException make_unary_typeexception(ConstantType type,
                        " 연산을 지원하지 않습니다.");
 }
 
-Constant Constant::operator+(ConstantPtr other) const {
+ConstantPtr Constant::operator+(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "더하기");
 }
 
-Constant Constant::operator-(ConstantPtr other) const {
+ConstantPtr Constant::operator-(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "빼기");
 }
 
-Constant Constant::operator*(ConstantPtr other) const {
+ConstantPtr Constant::operator*(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "곱하기");
 }
 
-Constant Constant::operator/(ConstantPtr other) const {
+ConstantPtr Constant::operator/(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "나누기");
 }
 
-Constant Constant::operator%(ConstantPtr other) const {
+ConstantPtr Constant::operator%(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "나머지");
 }
 
-Constant Constant::operator==(ConstantPtr other) const {
+ConstantPtr Constant::operator==(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "비교");
 }
 
-Constant Constant::operator<(ConstantPtr other) const {
+ConstantPtr Constant::operator<(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "대소 비교");
 }
 
-Constant Constant::operator>(ConstantPtr other) const {
+ConstantPtr Constant::operator>(ConstantRawPtr other) const {
   throw make_binary_typeexception(this->type, other->type, "대소 비교");
 }
 
-Constant Constant::operator-() const {
+ConstantPtr Constant::operator-() const {
   throw make_unary_typeexception(this->type, "부호 반전");
 }
 

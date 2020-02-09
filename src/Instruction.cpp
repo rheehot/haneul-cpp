@@ -1,11 +1,10 @@
-#include "Insturction.hpp"
-
 #include <iostream>
 
+#include "Insturction.hpp"
 #include "magic_enum.hpp"
 
 namespace haneul {
-void Instruction::dump() {
+void Instruction::dump() const {
   std::cout << this->line_number_ << " | Inst."
             << magic_enum::enum_name(this->opcode_);
   if (std::holds_alternative<uint64_t>(this->operand_)) {

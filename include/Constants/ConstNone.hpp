@@ -6,7 +6,9 @@ class ConstNone : public Constant {
 public:
   ConstNone() : Constant(ConstantType::None) {}
 
-  Constant operator==(ConstantPtr other) const override;
+  ConstantPtr operator==(ConstantRawPtr other) const override;
   std::string show() const override;
+
+  void dump() const override;
 };
 } // namespace haneul

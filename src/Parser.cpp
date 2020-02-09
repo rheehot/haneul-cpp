@@ -116,21 +116,21 @@ Instruction Parser::parse_instruction() {
   return Instruction(line_number, opcode, operand);
 }
 
-Constant Parser::parse_constant() {
+ConstantPtr Parser::parse_constant() {
   auto constant_type_index = this->consume<uint8_t>();
   auto constant_type = static_cast<ConstantType>(constant_type_index);
 
   switch (constant_type) {
   case ConstantType::None:
-    return ConstNone();
+    return std::make_unique<ConstNone>();
   case ConstantType::Integer:
-    return ConstInteger(this->parse_integer());
+    return std::make_unique<ConstInteger>(this->parse_integer());
   case ConstantType::Real:
-    return ConstInteger(this->parse_double());
+    return std::make_unique<ConstReal>(this->parse_double());
   case ConstantType::Char:
-    return ConstInteger(this->parse_char());
+    return std::make_unique<ConstChar>(this->parse_char());
   case ConstantType::Boolean:
-    return ConstInteger(this->parse_boolean());
+    return std::make_unique<ConstBoolean>(this->parse_boolean());
   }
 }
 } // namespace haneul

@@ -1,16 +1,20 @@
-#include "Constants/ConstNone.hpp"
+#include <iostream>
+
 #include "Constants/ConstBoolean.hpp"
+#include "Constants/ConstNone.hpp"
 
 namespace haneul {
-Constant ConstNone::operator==(ConstantPtr other) const {
+ConstantPtr ConstNone::operator==(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::None: {
-    return ConstBoolean(true);
+    return std::make_unique<ConstBoolean>(true);
   }
   default:
-    return ConstBoolean(false);
+    return std::make_unique<ConstBoolean>(false);
   }
 }
 
 std::string ConstNone::show() const { return "(없음)"; }
+
+void ConstNone::dump() const { std::cout << "ConstNone()\n"; }
 } // namespace haneul

@@ -29,6 +29,6 @@ public:
   bool parse_boolean();
 
   Instruction parse_instruction();
-  Constant parse_constant();
+  ConstantPtr parse_constant();
 };
 } // namespace haneul

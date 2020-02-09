@@ -31,7 +31,7 @@ public:
   Instruction(uint32_t line_number, Opcode opcode, OperandType operand)
       : line_number_(line_number), opcode_(opcode), operand_(operand) {}
 
-  void dump() override;
+  void dump() const override;
 
 private:
   uint32_t line_number_;

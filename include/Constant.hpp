@@ -15,24 +15,25 @@ TypeException make_unary_type_exception(ConstantType type,
 
 class Constant;
 
-using ConstantPtr = const Constant *const;
+using ConstantRawPtr = const Constant *const;
+using ConstantPtr = std::unique_ptr<Constant>;
 
 class Constant : public Dumpable {
-protected:
 public:
   const ConstantType type;
   Constant(ConstantType t) : type(t) {}
+  virtual ~Constant() {}
 
-  virtual Constant operator+(ConstantPtr other) const;
-  virtual Constant operator-(ConstantPtr other) const;
-  virtual Constant operator*(ConstantPtr other) const;
-  virtual Constant operator/(ConstantPtr other) const;
-  virtual Constant operator%(ConstantPtr other) const;
-  virtual Constant operator==(ConstantPtr other) const;
-  virtual Constant operator<(ConstantPtr other) const;
-  virtual Constant operator>(ConstantPtr other) const;
+  virtual ConstantPtr operator+(ConstantRawPtr other) const;
+  virtual ConstantPtr operator-(ConstantRawPtr other) const;
+  virtual ConstantPtr operator*(ConstantRawPtr other) const;
+  virtual ConstantPtr operator/(ConstantRawPtr other) const;
+  virtual ConstantPtr operator%(ConstantRawPtr other) const;
+  virtual ConstantPtr operator==(ConstantRawPtr other) const;
+  virtual ConstantPtr operator<(ConstantRawPtr other) const;
+  virtual ConstantPtr operator>(ConstantRawPtr other) const;
 
-  virtual Constant operator-() const;
+  virtual ConstantPtr operator-() const;
   virtual std::string show() const;
 
   virtual void dump() const;
