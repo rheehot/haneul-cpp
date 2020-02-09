@@ -6,6 +6,12 @@
 #include "Parser.hpp"
 #include "Util.hpp"
 
+#include "Constants/ConstBoolean.hpp"
+#include "Constants/ConstChar.hpp"
+#include "Constants/ConstInteger.hpp"
+#include "Constants/ConstNone.hpp"
+#include "Constants/ConstReal.hpp"
+
 namespace haneul {
 Parser::Parser(const std::string &input_file) {
   std::ifstream stream(input_file, std::ios::in | std::ios::binary);
@@ -108,5 +114,23 @@ Instruction Parser::parse_instruction() {
   }
 
   return Instruction(line_number, opcode, operand);
+}
+
+Constant Parser::parse_constant() {
+  auto constant_type_index = this->consume<uint8_t>();
+  auto constant_type = static_cast<ConstantType>(constant_type_index);
+
+  switch (constant_type) {
+  case ConstantType::None:
+    return ConstNone();
+  case ConstantType::Integer:
+    return ConstInteger(this->parse_integer());
+  case ConstantType::Real:
+    return ConstInteger(this->parse_double());
+  case ConstantType::Char:
+    return ConstInteger(this->parse_char());
+  case ConstantType::Boolean:
+    return ConstInteger(this->parse_boolean());
+  }
 }
 } // namespace haneul

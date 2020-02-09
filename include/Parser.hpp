@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "Constant.hpp"
 #include "Insturction.hpp"
 
 namespace haneul {
@@ -28,5 +29,6 @@ public:
   bool parse_boolean();
 
   Instruction parse_instruction();
-}; // namespace haneul
+  Constant parse_constant();
+};
 } // namespace haneul
