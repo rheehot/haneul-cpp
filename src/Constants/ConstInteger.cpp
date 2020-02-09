@@ -6,11 +6,11 @@ namespace haneul {
 Constant ConstInteger::operator+(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstInteger(this->value + derived->value);
   }
   case ConstantType::Real: {
-    auto derived = dynamic_cast<const ConstReal *>(other);
+    auto derived = static_cast<const ConstReal *>(other);
     return ConstReal(this->value + derived->value);
   }
   default:
@@ -21,11 +21,11 @@ Constant ConstInteger::operator+(ConstantPtr other) const {
 Constant ConstInteger::operator-(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstInteger(this->value - derived->value);
   }
   case ConstantType::Real: {
-    auto derived = dynamic_cast<const ConstReal *>(other);
+    auto derived = static_cast<const ConstReal *>(other);
     return ConstReal(this->value - derived->value);
   }
   default:
@@ -36,11 +36,11 @@ Constant ConstInteger::operator-(ConstantPtr other) const {
 Constant ConstInteger::operator*(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstInteger(this->value * derived->value);
   }
   case ConstantType::Real: {
-    auto derived = dynamic_cast<const ConstReal *>(other);
+    auto derived = static_cast<const ConstReal *>(other);
     return ConstReal(this->value * derived->value);
   }
   default:
@@ -51,11 +51,11 @@ Constant ConstInteger::operator*(ConstantPtr other) const {
 Constant ConstInteger::operator/(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstInteger(this->value / derived->value);
   }
   case ConstantType::Real: {
-    auto derived = dynamic_cast<const ConstReal *>(other);
+    auto derived = static_cast<const ConstReal *>(other);
     return ConstReal(this->value / derived->value);
   }
   default:
@@ -66,7 +66,7 @@ Constant ConstInteger::operator/(ConstantPtr other) const {
 Constant ConstInteger::operator%(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstInteger(this->value % derived->value);
   }
   default:
@@ -77,7 +77,7 @@ Constant ConstInteger::operator%(ConstantPtr other) const {
 Constant ConstInteger::operator==(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstBoolean(this->value == derived->value);
   }
   default:
@@ -88,11 +88,11 @@ Constant ConstInteger::operator==(ConstantPtr other) const {
 Constant ConstInteger::operator<(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstBoolean(this->value < derived->value);
   }
   case ConstantType::Real: {
-    auto derived = dynamic_cast<const ConstReal *>(other);
+    auto derived = static_cast<const ConstReal *>(other);
     return ConstBoolean(this->value < derived->value);
   }
   default:
@@ -103,11 +103,11 @@ Constant ConstInteger::operator<(ConstantPtr other) const {
 Constant ConstInteger::operator>(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Integer: {
-    auto derived = dynamic_cast<const ConstInteger *>(other);
+    auto derived = static_cast<const ConstInteger *>(other);
     return ConstBoolean(this->value > derived->value);
   }
   case ConstantType::Real: {
-    auto derived = dynamic_cast<const ConstReal *>(other);
+    auto derived = static_cast<const ConstReal *>(other);
     return ConstBoolean(this->value > derived->value);
   }
   default:

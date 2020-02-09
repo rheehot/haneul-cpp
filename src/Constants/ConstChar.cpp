@@ -8,7 +8,7 @@ namespace haneul {
 Constant ConstChar::operator==(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Char: {
-    auto derived = dynamic_cast<const ConstChar *>(other);
+    auto derived = static_cast<const ConstChar *>(other);
     return ConstBoolean(this->value == derived->value);
   }
   default:
@@ -19,7 +19,7 @@ Constant ConstChar::operator==(ConstantPtr other) const {
 Constant ConstChar::operator<(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Char: {
-    auto derived = dynamic_cast<const ConstChar *>(other);
+    auto derived = static_cast<const ConstChar *>(other);
     return ConstBoolean(this->value < derived->value);
   }
   default:
@@ -30,7 +30,7 @@ Constant ConstChar::operator<(ConstantPtr other) const {
 Constant ConstChar::operator>(ConstantPtr other) const {
   switch (other->type) {
   case ConstantType::Char: {
-    auto derived = dynamic_cast<const ConstChar *>(other);
+    auto derived = static_cast<const ConstChar *>(other);
     return ConstBoolean(this->value > derived->value);
   }
   default:
