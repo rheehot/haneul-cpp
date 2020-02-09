@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Constant.hpp"
 
 namespace haneul {
@@ -67,4 +69,6 @@ Constant Constant::operator-() const {
 std::string Constant::show() const {
   throw make_unary_typeexception(this->type, "문자열화");
 }
+
+void Constant::dump() const { std::cout << "(구현 안됨)" << std::endl; }
 } // namespace haneul

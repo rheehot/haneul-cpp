@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 
+#include "Dumpable.hpp"
 #include "Exception.hpp"
 
 namespace haneul {
@@ -16,7 +17,7 @@ class Constant;
 
 using ConstantPtr = const Constant *const;
 
-class Constant {
+class Constant : public Dumpable {
 protected:
 public:
   const ConstantType type;
@@ -33,6 +34,8 @@ public:
 
   virtual Constant operator-() const;
   virtual std::string show() const;
+
+  virtual void dump() const;
 };
 
 } // namespace haneul

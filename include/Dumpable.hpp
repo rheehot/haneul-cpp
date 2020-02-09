@@ -3,6 +3,6 @@
 namespace haneul {
 class Dumpable {
 public:
-  virtual void dump() = 0;
+  virtual void dump() const = 0;
 };
 } // namespace haneul
