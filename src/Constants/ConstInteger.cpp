@@ -4,7 +4,7 @@
 
 namespace haneul {
 Constant ConstInteger::operator+(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value + derived->value);
@@ -14,12 +14,12 @@ Constant ConstInteger::operator+(ConstantPtr other) const {
     return ConstReal(this->value + derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(), "더하기");
+    throw make_binary_type_exception(this->type, other->type, "더하기");
   }
 }
 
 Constant ConstInteger::operator-(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value - derived->value);
@@ -29,12 +29,12 @@ Constant ConstInteger::operator-(ConstantPtr other) const {
     return ConstReal(this->value - derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(), "빼기");
+    throw make_binary_type_exception(this->type, other->type, "빼기");
   }
 }
 
 Constant ConstInteger::operator*(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value * derived->value);
@@ -44,12 +44,12 @@ Constant ConstInteger::operator*(ConstantPtr other) const {
     return ConstReal(this->value * derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(), "곱하기");
+    throw make_binary_type_exception(this->type, other->type, "곱하기");
   }
 }
 
 Constant ConstInteger::operator/(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value / derived->value);
@@ -59,23 +59,23 @@ Constant ConstInteger::operator/(ConstantPtr other) const {
     return ConstReal(this->value / derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(), "나누기");
+    throw make_binary_type_exception(this->type, other->type, "나누기");
   }
 }
 
 Constant ConstInteger::operator%(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstInteger(this->value % derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(), "나머지");
+    throw make_binary_type_exception(this->type, other->type, "나머지");
   }
 }
 
 Constant ConstInteger::operator==(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstBoolean(this->value == derived->value);
@@ -86,7 +86,7 @@ Constant ConstInteger::operator==(ConstantPtr other) const {
 }
 
 Constant ConstInteger::operator<(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstBoolean(this->value < derived->value);
@@ -96,13 +96,12 @@ Constant ConstInteger::operator<(ConstantPtr other) const {
     return ConstBoolean(this->value < derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(),
-                                     "대소 비교");
+    throw make_binary_type_exception(this->type, other->type, "대소 비교");
   }
 }
 
 Constant ConstInteger::operator>(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Integer: {
     auto derived = dynamic_cast<const ConstInteger *>(other);
     return ConstBoolean(this->value > derived->value);
@@ -112,8 +111,7 @@ Constant ConstInteger::operator>(ConstantPtr other) const {
     return ConstBoolean(this->value > derived->value);
   }
   default:
-    throw make_binary_type_exception(this->type_, other->get_type(),
-                                     "대소 비교");
+    throw make_binary_type_exception(this->type, other->type, "대소 비교");
   }
 }
 

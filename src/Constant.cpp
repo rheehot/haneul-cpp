@@ -1,7 +1,7 @@
 #include "Constant.hpp"
 
 namespace haneul {
-std::string type_to_string(const ConstantType &type) {
+std::string typeto_string(const ConstantType &type) {
   switch (type) {
   case ConstantType::None:
     return "(없음)";
@@ -16,55 +16,55 @@ std::string type_to_string(const ConstantType &type) {
   }
 }
 
-TypeException make_binary_type_exception(ConstantType lhs, ConstantType rhs,
-                                         const std::string &operation) {
-  return TypeException(type_to_string(lhs) + "와(과) " + type_to_string(rhs) +
+TypeException make_binary_typeexception(ConstantType lhs, ConstantType rhs,
+                                        const std::string &operation) {
+  return TypeException(typeto_string(lhs) + "와(과) " + typeto_string(rhs) +
                        "은(는) " + operation + " 연산을 지원하지 않습니다.");
 }
-TypeException make_unary_type_exception(ConstantType type,
-                                        const std::string &operation) {
+TypeException make_unary_typeexception(ConstantType type,
+                                       const std::string &operation) {
 
-  return TypeException(type_to_string(type) + "은(는) " + operation +
+  return TypeException(typeto_string(type) + "은(는) " + operation +
                        " 연산을 지원하지 않습니다.");
 }
 
 Constant Constant::operator+(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "더하기");
+  throw make_binary_typeexception(this->type, other->type, "더하기");
 }
 
 Constant Constant::operator-(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "빼기");
+  throw make_binary_typeexception(this->type, other->type, "빼기");
 }
 
 Constant Constant::operator*(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "곱하기");
+  throw make_binary_typeexception(this->type, other->type, "곱하기");
 }
 
 Constant Constant::operator/(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "나누기");
+  throw make_binary_typeexception(this->type, other->type, "나누기");
 }
 
 Constant Constant::operator%(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "나머지");
+  throw make_binary_typeexception(this->type, other->type, "나머지");
 }
 
 Constant Constant::operator==(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "비교");
+  throw make_binary_typeexception(this->type, other->type, "비교");
 }
 
 Constant Constant::operator<(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "대소 비교");
+  throw make_binary_typeexception(this->type, other->type, "대소 비교");
 }
 
 Constant Constant::operator>(ConstantPtr other) const {
-  throw make_binary_type_exception(this->type_, other->type_, "대소 비교");
+  throw make_binary_typeexception(this->type, other->type, "대소 비교");
 }
 
 Constant Constant::operator-() const {
-  throw make_unary_type_exception(this->type_, "부호 반전");
+  throw make_unary_typeexception(this->type, "부호 반전");
 }
 
 std::string Constant::show() const {
-  throw make_unary_type_exception(this->type_, "문자열화");
+  throw make_unary_typeexception(this->type, "문자열화");
 }
 } // namespace haneul

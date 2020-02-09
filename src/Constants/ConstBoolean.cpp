@@ -2,7 +2,7 @@
 
 namespace haneul {
 Constant ConstBoolean::operator==(ConstantPtr other) const {
-  switch (other->get_type()) {
+  switch (other->type) {
   case ConstantType::Boolean: {
     auto derived = dynamic_cast<const ConstBoolean *>(other);
     return ConstBoolean(this->value == derived->value);

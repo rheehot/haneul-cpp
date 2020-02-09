@@ -18,12 +18,9 @@ using ConstantPtr = const Constant *const;
 
 class Constant {
 protected:
-  const ConstantType type_;
-
 public:
-  Constant(ConstantType type) : type_(type) {}
-
-  ConstantType get_type() const noexcept { return this->type_; }
+  const ConstantType type;
+  Constant(ConstantType t) : type(t) {}
 
   virtual Constant operator+(ConstantPtr other) const;
   virtual Constant operator-(ConstantPtr other) const;
