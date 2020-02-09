@@ -3,11 +3,12 @@
 #include <vector>
 
 #include "Constant.hpp"
+#include "Dumpable.hpp"
 #include "Insturction.hpp"
 
 namespace haneul {
 
-class FuncObject {
+class FuncObject : public Dumpable {
 private:
   std::vector<std::string> arg_names_;
   Code code_;
@@ -22,6 +23,8 @@ public:
   FuncObject(FuncObject &&) = default;
   FuncObject(const FuncObject &) = delete;
   FuncObject &operator=(const FuncObject &) = delete;
+
+  void dump() const override;
 };
 
 } // namespace haneul

@@ -35,6 +35,6 @@ public:
   ConstantPtr parse_constant();
 
   template <class Functor>
-  std::vector<std::invoke_result_t<Functor>> parse_list(Functor parse_func);
+  std::vector<std::invoke_result_t<Functor>> parse_list(Functor &&parse_func);
 };
 } // namespace haneul

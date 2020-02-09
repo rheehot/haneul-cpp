@@ -147,7 +147,7 @@ ConstantPtr Parser::parse_constant() {
 
 template <class Functor>
 std::vector<std::invoke_result_t<Functor>>
-Parser::parse_list(Functor parse_func) {
+Parser::parse_list(Functor &&parse_func) {
   using ResultType = std::invoke_result_t<Functor>;
   static_assert(std::is_invocable_v<Functor>);
 

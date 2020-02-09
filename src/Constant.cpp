@@ -15,6 +15,8 @@ std::string typeto_string(const ConstantType &type) {
     return "실수";
   case ConstantType::Char:
     return "문자";
+  case ConstantType::Function:
+    return "함수";
   }
 }
 
