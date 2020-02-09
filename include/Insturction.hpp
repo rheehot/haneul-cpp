@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <variant>
+#include <vector>
 
 #include "Dumpable.hpp"
 
@@ -38,4 +39,7 @@ private:
   Opcode opcode_;
   OperandType operand_;
 };
+
+using Code = std::vector<Instruction>;
+
 } // namespace haneul

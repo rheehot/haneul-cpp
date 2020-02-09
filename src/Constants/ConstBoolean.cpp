@@ -17,6 +17,6 @@ ConstantPtr ConstBoolean::operator==(ConstantRawPtr other) const {
 std::string ConstBoolean::show() const { return this->value ? "참" : "거짓"; }
 
 void ConstBoolean::dump() const {
-  std::cout << "ConstBoolean(" << this->value << ")\n";
+  std::cout << "ConstBoolean(" << this->value << ")" << std::endl;
 }
 } // namespace haneul

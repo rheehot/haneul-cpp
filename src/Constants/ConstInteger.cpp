@@ -124,6 +124,6 @@ ConstantPtr ConstInteger::operator-() const {
 std::string ConstInteger::show() const { return std::to_string(this->value); }
 
 void ConstInteger::dump() const {
-  std::cout << "ConstInteger(" << this->value << ")\n";
+  std::cout << "ConstInteger(" << this->value << ")" << std::endl;
 }
 } // namespace haneul

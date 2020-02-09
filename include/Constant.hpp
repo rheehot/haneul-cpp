@@ -6,7 +6,14 @@
 #include "Exception.hpp"
 
 namespace haneul {
-enum class ConstantType : uint8_t { None, Integer, Real, Char, Boolean };
+enum class ConstantType : uint8_t {
+  None,
+  Integer,
+  Real,
+  Char,
+  Boolean,
+  Function
+};
 
 TypeException make_binary_type_exception(ConstantType lhs, ConstantType rhs,
                                          const std::string &operation);

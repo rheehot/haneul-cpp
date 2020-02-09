@@ -16,5 +16,5 @@ ConstantPtr ConstNone::operator==(ConstantRawPtr other) const {
 
 std::string ConstNone::show() const { return "(없음)"; }
 
-void ConstNone::dump() const { std::cout << "ConstNone()\n"; }
+void ConstNone::dump() const { std::cout << "ConstNone()" << std::endl; }
 } // namespace haneul

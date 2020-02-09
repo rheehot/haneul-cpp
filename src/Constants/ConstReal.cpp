@@ -113,6 +113,6 @@ ConstantPtr ConstReal::operator-() const {
 std::string ConstReal::show() const { return std::to_string(this->value); }
 
 void ConstReal::dump() const {
-  std::cout << "ConstReal(" << this->value << ")\n";
+  std::cout << "ConstReal(" << this->value << ")" << std::endl;
 }
 } // namespace haneul

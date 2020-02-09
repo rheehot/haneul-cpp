@@ -46,7 +46,8 @@ std::string ConstChar::show() const {
 }
 
 void ConstChar::dump() const {
-  std::cout << "ConstChar('" << util::char32_to_string(this->value) << "')\n";
+  std::cout << "ConstChar('" << util::char32_to_string(this->value) << "')"
+            << std::endl;
 }
 
 } // namespace haneul
