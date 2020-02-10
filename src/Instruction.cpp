@@ -15,4 +15,15 @@ void Instruction::dump() const {
 
   std::cout << std::endl;
 }
+
+Opcode Instruction::get_opcode() { return this->opcode_; }
+
+std::string Instruction::get_string_operand() {
+  return std::get<std::string>(this->operand_);
+}
+
+uint64_t Instruction::get_integer_operand() {
+  return std::get<uint64_t>(this->operand_);
+}
+
 } // namespace haneul

@@ -34,6 +34,10 @@ public:
 
   void dump() const override;
 
+  Opcode get_opcode();
+  std::string get_string_operand();
+  uint64_t get_integer_operand();
+
 private:
   uint32_t line_number_;
   Opcode opcode_;

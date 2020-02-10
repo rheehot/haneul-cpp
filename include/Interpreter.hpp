@@ -14,14 +14,17 @@ struct StackFrame final {
 class Interpreter final {
 public:
   using SymbolTable = std::multimap<std::string, ConstantPtr>;
+  using CodeIterator = Code::const_iterator;
 
 private:
   std::stack<StackFrame> call_stack_;
   SymbolTable symbol_table_;
 
+  StackFrame current_frame();
+
 public:
   Interpreter(ConstantList &&const_table, SymbolTable &&symbol_table);
 
-  void run(const Code &code);
+  void run(CodeIterator begin, CodeIterator end);
 };
 } // namespace haneul
