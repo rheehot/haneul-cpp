@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "Dumpable.hpp"
 #include "Exception.hpp"
@@ -24,6 +25,7 @@ class Constant;
 
 using ConstantRawPtr = const Constant *const;
 using ConstantPtr = std::unique_ptr<Constant>;
+using ConstantList = std::vector<ConstantPtr>;
 
 class Constant : public Dumpable {
 public:

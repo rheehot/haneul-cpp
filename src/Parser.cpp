@@ -145,6 +145,13 @@ ConstantPtr Parser::parse_constant() {
   }
 }
 
+std::pair<ConstantList, Code> Parser::parse_program() {
+  auto const_table = this->parse_list([&] { return parse_constant(); });
+  auto code = this->parse_list([&] { return parse_instruction(); });
+
+  return std::make_pair(std::move(const_table), code);
+}
+
 template <class Functor>
 std::vector<std::invoke_result_t<Functor>>
 Parser::parse_list(Functor &&parse_func) {

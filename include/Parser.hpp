@@ -34,6 +34,8 @@ public:
   Instruction parse_instruction();
   ConstantPtr parse_constant();
 
+  std::pair<ConstantList, Code> parse_program();
+
   template <class Functor>
   std::vector<std::invoke_result_t<Functor>> parse_list(Functor &&parse_func);
 };
