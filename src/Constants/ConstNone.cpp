@@ -7,10 +7,10 @@ namespace haneul {
 ConstantPtr ConstNone::operator==(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::None: {
-    return std::make_unique<ConstBoolean>(true);
+    return std::make_shared<ConstBoolean>(true);
   }
   default:
-    return std::make_unique<ConstBoolean>(false);
+    return std::make_shared<ConstBoolean>(false);
   }
 }
 

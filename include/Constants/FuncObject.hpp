@@ -16,13 +16,8 @@ private:
 
 public:
   FuncObject(std::vector<std::string> arg_names, Code code,
-             ConstantList &&const_table)
-      : arg_names_(arg_names), code_(code),
-        const_table_(std::move(const_table)) {}
-
-  FuncObject(FuncObject &&) = default;
-  FuncObject(const FuncObject &) = delete;
-  FuncObject &operator=(const FuncObject &) = delete;
+             const ConstantList &const_table)
+      : arg_names_(arg_names), code_(code), const_table_(const_table) {}
 
   void dump() const override;
 };

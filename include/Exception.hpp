@@ -20,4 +20,8 @@ public:
 class TypeException : public HaneulException {
   using HaneulException::HaneulException;
 };
+
+class InterpreterException : public HaneulException {
+  using HaneulException::HaneulException;
+};
 } // namespace haneul

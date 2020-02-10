@@ -12,10 +12,10 @@ ConstantPtr ConstChar::operator==(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Char: {
     auto derived = static_cast<const ConstChar *>(other);
-    return std::make_unique<ConstBoolean>(this->value == derived->value);
+    return std::make_shared<ConstBoolean>(this->value == derived->value);
   }
   default:
-    return std::make_unique<ConstBoolean>(false);
+    return std::make_shared<ConstBoolean>(false);
   }
 }
 
@@ -23,7 +23,7 @@ ConstantPtr ConstChar::operator<(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Char: {
     auto derived = static_cast<const ConstChar *>(other);
-    return std::make_unique<ConstBoolean>(this->value < derived->value);
+    return std::make_shared<ConstBoolean>(this->value < derived->value);
   }
   default:
     return Constant::operator<(other);
@@ -34,7 +34,7 @@ ConstantPtr ConstChar::operator>(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Char: {
     auto derived = static_cast<const ConstChar *>(other);
-    return std::make_unique<ConstBoolean>(this->value > derived->value);
+    return std::make_shared<ConstBoolean>(this->value > derived->value);
   }
   default:
     return Constant::operator>(other);

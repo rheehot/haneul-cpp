@@ -95,7 +95,7 @@ FuncObject Parser::parse_func_object() {
   auto const_table = this->parse_list([&] { return parse_constant(); });
   auto code = this->parse_list([&] { return parse_instruction(); });
 
-  return FuncObject(arg_names, code, std::move(const_table));
+  return FuncObject(arg_names, code, const_table);
 }
 
 Instruction Parser::parse_instruction() {
@@ -131,17 +131,17 @@ ConstantPtr Parser::parse_constant() {
 
   switch (constant_type) {
   case ConstantType::None:
-    return std::make_unique<ConstNone>();
+    return std::make_shared<ConstNone>();
   case ConstantType::Integer:
-    return std::make_unique<ConstInteger>(this->parse_integer());
+    return std::make_shared<ConstInteger>(this->parse_integer());
   case ConstantType::Real:
-    return std::make_unique<ConstReal>(this->parse_double());
+    return std::make_shared<ConstReal>(this->parse_double());
   case ConstantType::Char:
-    return std::make_unique<ConstChar>(this->parse_char());
+    return std::make_shared<ConstChar>(this->parse_char());
   case ConstantType::Boolean:
-    return std::make_unique<ConstBoolean>(this->parse_boolean());
+    return std::make_shared<ConstBoolean>(this->parse_boolean());
   case ConstantType::Function:
-    return std::make_unique<ConstFunc>(this->parse_func_object());
+    return std::make_shared<ConstFunc>(this->parse_func_object());
   }
 }
 
@@ -149,7 +149,7 @@ std::pair<ConstantList, Code> Parser::parse_program() {
   auto const_table = this->parse_list([&] { return parse_constant(); });
   auto code = this->parse_list([&] { return parse_instruction(); });
 
-  return std::make_pair(std::move(const_table), code);
+  return std::make_pair(const_table, code);
 }
 
 template <class Functor>

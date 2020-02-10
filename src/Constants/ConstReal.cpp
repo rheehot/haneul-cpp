@@ -10,11 +10,11 @@ ConstantPtr ConstReal::operator+(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstReal>(this->value + derived->value);
+    return std::make_shared<ConstReal>(this->value + derived->value);
   }
   case ConstantType::Integer: {
     auto derived = static_cast<const ConstInteger *>(other);
-    return std::make_unique<ConstReal>(this->value + derived->value);
+    return std::make_shared<ConstReal>(this->value + derived->value);
   }
   default:
     return Constant::operator+(other);
@@ -25,11 +25,11 @@ ConstantPtr ConstReal::operator-(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstReal>(this->value - derived->value);
+    return std::make_shared<ConstReal>(this->value - derived->value);
   }
   case ConstantType::Integer: {
     auto derived = static_cast<const ConstInteger *>(other);
-    return std::make_unique<ConstReal>(this->value - derived->value);
+    return std::make_shared<ConstReal>(this->value - derived->value);
   }
   default:
     return Constant::operator-(other);
@@ -40,11 +40,11 @@ ConstantPtr ConstReal::operator*(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstReal>(this->value * derived->value);
+    return std::make_shared<ConstReal>(this->value * derived->value);
   }
   case ConstantType::Integer: {
     auto derived = static_cast<const ConstInteger *>(other);
-    return std::make_unique<ConstReal>(this->value * derived->value);
+    return std::make_shared<ConstReal>(this->value * derived->value);
   }
   default:
     return Constant::operator*(other);
@@ -55,11 +55,11 @@ ConstantPtr ConstReal::operator/(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstReal>(this->value / derived->value);
+    return std::make_shared<ConstReal>(this->value / derived->value);
   }
   case ConstantType::Integer: {
     auto derived = static_cast<const ConstInteger *>(other);
-    return std::make_unique<ConstReal>(this->value / derived->value);
+    return std::make_shared<ConstReal>(this->value / derived->value);
   }
   default:
     return Constant::operator/(other);
@@ -70,10 +70,10 @@ ConstantPtr ConstReal::operator==(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstBoolean>(this->value == derived->value);
+    return std::make_shared<ConstBoolean>(this->value == derived->value);
   }
   default:
-    return std::make_unique<ConstBoolean>(false);
+    return std::make_shared<ConstBoolean>(false);
   }
 }
 
@@ -81,11 +81,11 @@ ConstantPtr ConstReal::operator<(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstBoolean>(this->value < derived->value);
+    return std::make_shared<ConstBoolean>(this->value < derived->value);
   }
   case ConstantType::Integer: {
     auto derived = static_cast<const ConstInteger *>(other);
-    return std::make_unique<ConstBoolean>(this->value < derived->value);
+    return std::make_shared<ConstBoolean>(this->value < derived->value);
   }
   default:
     return Constant::operator<(other);
@@ -96,11 +96,11 @@ ConstantPtr ConstReal::operator>(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Real: {
     auto derived = static_cast<const ConstReal *>(other);
-    return std::make_unique<ConstBoolean>(this->value > derived->value);
+    return std::make_shared<ConstBoolean>(this->value > derived->value);
   }
   case ConstantType::Integer: {
     auto derived = static_cast<const ConstInteger *>(other);
-    return std::make_unique<ConstBoolean>(this->value > derived->value);
+    return std::make_shared<ConstBoolean>(this->value > derived->value);
   }
   default:
     return Constant::operator>(other);
@@ -108,7 +108,7 @@ ConstantPtr ConstReal::operator>(ConstantRawPtr other) const {
 }
 
 ConstantPtr ConstReal::operator-() const {
-  return std::make_unique<ConstReal>(-this->value);
+  return std::make_shared<ConstReal>(-this->value);
 }
 std::string ConstReal::show() const { return std::to_string(this->value); }
 

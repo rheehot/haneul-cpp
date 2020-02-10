@@ -24,7 +24,7 @@ TypeException make_unary_type_exception(ConstantType type,
 class Constant;
 
 using ConstantRawPtr = const Constant *const;
-using ConstantPtr = std::unique_ptr<Constant>;
+using ConstantPtr = std::shared_ptr<Constant>;
 using ConstantList = std::vector<ConstantPtr>;
 
 class Constant : public Dumpable {

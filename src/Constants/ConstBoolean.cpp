@@ -7,10 +7,10 @@ ConstantPtr ConstBoolean::operator==(ConstantRawPtr other) const {
   switch (other->type) {
   case ConstantType::Boolean: {
     auto derived = static_cast<const ConstBoolean *>(other);
-    return std::make_unique<ConstBoolean>(this->value == derived->value);
+    return std::make_shared<ConstBoolean>(this->value == derived->value);
   }
   default:
-    return std::make_unique<ConstBoolean>(false);
+    return std::make_shared<ConstBoolean>(false);
   }
 }
 

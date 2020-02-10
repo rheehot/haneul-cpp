@@ -23,7 +23,7 @@ private:
   StackFrame current_frame();
 
 public:
-  Interpreter(ConstantList &&const_table, SymbolTable &&symbol_table);
+  Interpreter(const ConstantList &const_table, const SymbolTable &symbol_table);
 
   void run(CodeIterator begin, CodeIterator end);
 };
