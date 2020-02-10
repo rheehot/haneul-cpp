@@ -1,6 +1,6 @@
 #include "Constant.hpp"
 #include "FuncObject.hpp"
-#include "Insturction.hpp"
+#include "Instruction.hpp"
 #include "Value.hpp"
 
 namespace haneul {

@@ -7,7 +7,7 @@
 
 #include "Constant.hpp"
 #include "Constants/FuncObject.hpp"
-#include "Insturction.hpp"
+#include "Instruction.hpp"
 
 namespace haneul {
 class Parser {

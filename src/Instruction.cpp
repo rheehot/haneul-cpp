@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Insturction.hpp"
+#include "Instruction.hpp"
 #include "magic_enum.hpp"
 
 namespace haneul {

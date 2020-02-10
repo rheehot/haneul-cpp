@@ -4,7 +4,7 @@
 
 #include "Constant.hpp"
 #include "Dumpable.hpp"
-#include "Insturction.hpp"
+#include "Instruction.hpp"
 
 namespace haneul {
 

@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Constant.hpp"
+#include "Instruction.hpp"
 
 namespace haneul {
 struct StackFrame final {
@@ -20,5 +21,7 @@ private:
 
 public:
   Interpreter(ConstantList &&const_table, SymbolTable &&symbol_table);
+
+  void run(const Code &code);
 };
 } // namespace haneul
