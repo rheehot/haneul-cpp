@@ -7,7 +7,7 @@ namespace haneul {
 
 class ConstFunc : public Constant, public Value<FuncObject> {
 public:
-  ConstFunc(ValueType value)
+  ConstFunc(ValueType &&value)
       : Constant(ConstantType::Function), Value(std::move(value)) {}
 
   void dump() const override;

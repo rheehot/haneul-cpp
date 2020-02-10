@@ -19,8 +19,5 @@ int main(int argc, char **argv) {
   for (const auto &inst : code) {
     inst.dump();
   }
-
-  // std::cout << result.show() << std::endl;
-  // std::cout << parser.par() << '\n';
   return 0;
 }

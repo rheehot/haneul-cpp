@@ -16,7 +16,7 @@ private:
 
 public:
   FuncObject(std::vector<std::string> arg_names, Code code,
-             ConstantList const_table)
+             ConstantList &&const_table)
       : arg_names_(arg_names), code_(code),
         const_table_(std::move(const_table)) {}
 
