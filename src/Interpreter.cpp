@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include "Constants/ConstFunc.hpp"
 #include "Interpreter.hpp"
 
 namespace haneul {
@@ -12,26 +13,29 @@ Interpreter::Interpreter(const ConstantList &const_table,
 
 StackFrame Interpreter::current_frame() { return this->call_stack_.top(); }
 
-void Interpreter::run(CodeIterator begin, CodeIterator end) {
-  std::stack<ConstantPtr> stack;
+void Interpreter::run(CodeIterator begin, CodeIterator end,
+                      ConstantList const_table) {
 
-  for (; begin != end; ++begin) {
-    auto current_inst = *begin;
+  for (auto it = begin; it != end; ++it) {
+    auto current_inst = *it;
+
     switch (current_inst.get_opcode()) {
     case Opcode::Push: {
       auto index = current_inst.get_integer_operand();
-      stack.push(this->current_frame().const_table[index]);
+      stack_.push(const_table[index]);
       break;
     }
 
     case Opcode::Pop:
-      stack.pop();
+      stack_.pop();
       break;
 
     case Opcode::Store: {
       auto symbol = current_inst.get_string_operand();
-      this->symbol_table_.insert(std::make_pair(symbol, stack.top()));
-      stack.pop();
+      this->symbol_table_.emplace_back(symbol, stack_.top());
+      stack_.pop();
+
+      break;
     }
 
     case Opcode::Load: {
@@ -45,7 +49,45 @@ void Interpreter::run(CodeIterator begin, CodeIterator end) {
                                    "'를 찾을 수 없습니다.");
       }
 
-      stack.push(result->second);
+      stack_.push(result->second);
+
+      break;
+    }
+
+    case Opcode::PopName: {
+      this->symbol_table_.pop_back();
+      break;
+    }
+
+    case Opcode::Call: {
+      auto given_arity = current_inst.get_integer_operand();
+      std::vector<ConstantPtr> args;
+
+      auto callee = stack_.top();
+      stack_.pop();
+
+      // for (std::size_t i = 0; i < given_arity; i++) {
+      //   args.push_back(stack.top());
+      //   stack.pop();
+      // }
+
+      if (callee->type == ConstantType::Function) {
+        auto func_object = static_cast<const ConstFunc *>(callee.get())->value;
+        auto actual_arity = func_object.arg_names.size();
+
+        if (given_arity != actual_arity) {
+          throw InterpreterException(
+              "이 함수는 " + std::to_string(actual_arity) +
+              "개의 인수를 받지만 " + std::to_string(given_arity) +
+              "개의 인수가 주어졌습니다.");
+        }
+
+        this->run(func_object.code.cbegin(), func_object.code.cend(),
+                  func_object.const_table);
+      } else {
+        throw TypeException(type_to_string(callee->type) +
+                            " 타입의 값은 호출 가능하지 않습니다.");
+      }
     }
     }
   }
