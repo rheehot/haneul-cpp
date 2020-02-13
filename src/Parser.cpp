@@ -103,7 +103,6 @@ Instruction Parser::parse_instruction() {
   auto opcode_index = this->consume<uint8_t>();
 
   auto opcode = static_cast<Opcode>(opcode_index);
-  Instruction::OperandType operand;
 
   switch (opcode) {
   case Opcode::Push:
@@ -111,19 +110,15 @@ Instruction Parser::parse_instruction() {
   case Opcode::Jmp:
   case Opcode::PopJmpIfFalse: // 정수형 operand를 가지는 인스트럭션들
   case Opcode::Load:
-    operand = this->consume<uint32_t>();
-    break;
+    return Instruction(line_number, opcode, this->consume<uint32_t>());
 
   case Opcode::LoadGlobal:
   case Opcode::StoreGlobal: // 문자열 operand를 가지는 인스트럭션들
-    operand = this->parse_string();
-    break;
+    return Instruction(line_number, opcode, this->parse_string());
 
   default:
-    operand = std::monostate();
+    return Instruction(line_number, opcode);
   }
-
-  return Instruction(line_number, opcode, operand);
 }
 
 ConstantPtr Parser::parse_constant() {
