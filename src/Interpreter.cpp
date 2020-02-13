@@ -155,5 +155,8 @@ void Interpreter::run(const StackFrame &frame) {
     }
     }
   }
+
+  if (!stack_.empty())
+    stack_.back()->dump();
 }
 } // namespace haneul
