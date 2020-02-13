@@ -37,7 +37,7 @@ public:
   void dump() const override;
 
   Opcode get_opcode();
-  std::string get_string_operand();
+  const std::string &get_string_operand();
   uint64_t get_integer_operand();
 
 private:

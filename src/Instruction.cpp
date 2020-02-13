@@ -13,7 +13,9 @@ void Instruction::dump() const {
 
 Opcode Instruction::get_opcode() { return this->opcode_; }
 
-std::string Instruction::get_string_operand() { return this->string_operand_; }
+const std::string &Instruction::get_string_operand() {
+  return this->string_operand_;
+}
 uint64_t Instruction::get_integer_operand() { return this->integer_operand_; }
 
 } // namespace haneul
