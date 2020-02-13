@@ -19,12 +19,13 @@ ConstantPtr Interpreter::pop_move() {
 
 void Interpreter::run(const StackFrame &frame) {
   for (auto it = frame.begin; it != frame.end; ++it) {
-    auto current_inst = *it;
+    const auto current_inst = *it;
     // current_inst.dump();
 
-    switch (current_inst.get_opcode()) {
+    const auto opcode = current_inst.get_opcode();
+    switch (opcode) {
     case Opcode::Push: {
-      auto index = current_inst.get_integer_operand();
+      const auto index = current_inst.get_integer_operand();
       stack_.push_back(frame.const_table[index]);
       break;
     }
@@ -34,34 +35,35 @@ void Interpreter::run(const StackFrame &frame) {
       break;
 
     case Opcode::Load: {
-      auto offset = current_inst.get_integer_operand();
+      const auto offset = current_inst.get_integer_operand();
       stack_.push_back(this->stack_[frame.slot_start + offset]);
 
       break;
     }
 
     case Opcode::LoadGlobal: {
-      auto symbol = current_inst.get_string_operand();
+      const auto symbol = current_inst.get_string_operand();
       stack_.push_back(symbol_table_.at(symbol));
 
       break;
     }
 
     case Opcode::StoreGlobal: {
-      auto symbol = current_inst.get_string_operand();
+      const auto symbol = current_inst.get_string_operand();
       symbol_table_[symbol] = this->pop_move();
 
       break;
     }
 
     case Opcode::Call: {
-      auto given_arity = current_inst.get_integer_operand();
+      const auto given_arity = current_inst.get_integer_operand();
 
-      auto callee = this->pop_move();
+      const auto callee = this->pop_move();
 
       if (callee->type == ConstantType::Function) {
-        auto func_object = static_cast<const ConstFunc *>(callee.get())->value;
-        auto actual_arity = func_object.arity();
+        const auto func_object =
+            static_cast<const ConstFunc *>(callee.get())->value;
+        const auto actual_arity = func_object.arity();
 
         if (given_arity != actual_arity) {
           throw InterpreterException(
@@ -74,7 +76,7 @@ void Interpreter::run(const StackFrame &frame) {
             StackFrame{func_object.const_table(), func_object.code().cbegin(),
                        func_object.code().cend(), stack_.size() - given_arity});
 
-        auto result = this->pop_move();
+        const auto result = this->pop_move();
 
         for (std::size_t i = 0; i < given_arity; i++) {
           stack_.pop_back();
@@ -95,10 +97,11 @@ void Interpreter::run(const StackFrame &frame) {
     }
 
     case Opcode::PopJmpIfFalse: {
-      auto object = this->pop_move();
+      const auto object = this->pop_move();
 
       if (object->type == ConstantType::Boolean) {
-        auto value = static_cast<const ConstBoolean *>(object.get())->value;
+        const auto value =
+            static_cast<const ConstBoolean *>(object.get())->value;
 
         if (!value) {
           it = frame.begin + current_inst.get_integer_operand() - 1;
@@ -111,7 +114,7 @@ void Interpreter::run(const StackFrame &frame) {
     }
 
     case Opcode::Negate: {
-      auto object = this->pop_move();
+      const auto object = this->pop_move();
 
       stack_.push_back(
           -(*object)); // FIX: Boolean에 대한 negate 연산은 분리되어야함.
@@ -119,13 +122,13 @@ void Interpreter::run(const StackFrame &frame) {
     }
 
     default: { // 이항 연산 인스트럭션들
-      auto rhs_ptr = this->pop_move();
-      auto lhs_ptr = this->pop_move();
+      const auto rhs_ptr = this->pop_move();
+      const auto lhs_ptr = this->pop_move();
 
       const auto &lhs = *lhs_ptr;
       const auto &rhs = rhs_ptr.get();
 
-      switch (current_inst.get_opcode()) {
+      switch (opcode) {
       case Opcode::Add:
         stack_.push_back(lhs + rhs);
         break;

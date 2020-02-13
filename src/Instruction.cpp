@@ -11,11 +11,13 @@ void Instruction::dump() const {
   std::cout << " \"" << this->string_operand_ << "\"";
 }
 
-Opcode Instruction::get_opcode() { return this->opcode_; }
+Opcode Instruction::get_opcode() const { return this->opcode_; }
 
-const std::string &Instruction::get_string_operand() {
+const std::string &Instruction::get_string_operand() const {
   return this->string_operand_;
 }
-uint32_t Instruction::get_integer_operand() { return this->integer_operand_; }
+uint32_t Instruction::get_integer_operand() const {
+  return this->integer_operand_;
+}
 
 } // namespace haneul
