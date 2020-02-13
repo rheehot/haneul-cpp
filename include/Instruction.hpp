@@ -9,9 +9,9 @@ namespace haneul {
 enum class Opcode : uint8_t {
   Push,
   Pop,
-  Store,
   Load,
-  PopName,
+  StoreGlobal,
+  LoadGlobal,
   Call,
   Jmp,
   PopJmpIfFalse,

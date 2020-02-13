@@ -7,9 +7,7 @@
 #include "Instruction.hpp"
 
 namespace haneul {
-struct StackFrame final {
-  ConstantList const_table;
-};
+struct StackFrame;
 
 class Interpreter final {
 public:
@@ -18,11 +16,19 @@ public:
 
 private:
   SymbolTable symbol_table_;
-  std::stack<ConstantPtr> stack_;
+  std::vector<ConstantPtr> stack_;
 
 public:
   Interpreter(const SymbolTable &symbol_table);
 
-  void run(CodeIterator begin, CodeIterator end, ConstantList const_table);
+  void run(const StackFrame &frame);
 };
+
+struct StackFrame final {
+  ConstantList const_table;
+  Interpreter::CodeIterator begin;
+  Interpreter::CodeIterator end;
+  std::size_t slot_start;
+};
+
 } // namespace haneul

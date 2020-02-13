@@ -110,11 +110,12 @@ Instruction Parser::parse_instruction() {
   case Opcode::Call:
   case Opcode::Jmp:
   case Opcode::PopJmpIfFalse: // 정수형 operand를 가지는 인스트럭션들
+  case Opcode::Load:
     operand = this->consume<uint32_t>();
     break;
 
-  case Opcode::Store:
-  case Opcode::Load: // 문자열 operand를 가지는 인스트럭션들
+  case Opcode::LoadGlobal:
+  case Opcode::StoreGlobal: // 문자열 operand를 가지는 인스트럭션들
     operand = this->parse_string();
     break;
 

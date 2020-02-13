@@ -22,6 +22,6 @@ int main(int argc, char **argv) {
   // }
 
   haneul::Interpreter interp({});
-  interp.run(code.cbegin(), code.cend(), const_table);
+  interp.run({const_table, code.cbegin(), code.cend(), 0});
   return 0;
 }
