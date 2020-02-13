@@ -9,6 +9,7 @@ namespace haneul {
 
 Interpreter::Interpreter(const SymbolTable &symbol_table) {
   this->symbol_table_ = symbol_table;
+  this->stack_.reserve(250000);
 }
 
 ConstantPtr Interpreter::pop_move() {
