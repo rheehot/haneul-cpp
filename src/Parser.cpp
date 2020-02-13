@@ -91,11 +91,11 @@ bool Parser::parse_boolean() {
 }
 
 FuncObject Parser::parse_func_object() {
-  auto arg_names = this->parse_list([&] { return parse_string(); });
+  auto arity = this->consume<uint8_t>();
   auto const_table = this->parse_list([&] { return parse_constant(); });
   auto code = this->parse_list([&] { return parse_instruction(); });
 
-  return FuncObject(arg_names, code, const_table);
+  return FuncObject(arity, code, const_table);
 }
 
 Instruction Parser::parse_instruction() {

@@ -59,7 +59,7 @@ void Interpreter::run(const StackFrame &frame) {
 
       if (callee->type == ConstantType::Function) {
         auto func_object = static_cast<const ConstFunc *>(callee.get())->value;
-        auto actual_arity = func_object.arg_names().size();
+        auto actual_arity = func_object.arity();
 
         if (given_arity != actual_arity) {
           throw InterpreterException(
