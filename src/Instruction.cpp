@@ -16,6 +16,6 @@ Opcode Instruction::get_opcode() { return this->opcode_; }
 const std::string &Instruction::get_string_operand() {
   return this->string_operand_;
 }
-uint64_t Instruction::get_integer_operand() { return this->integer_operand_; }
+uint32_t Instruction::get_integer_operand() { return this->integer_operand_; }
 
 } // namespace haneul
