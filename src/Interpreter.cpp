@@ -11,6 +11,12 @@ Interpreter::Interpreter(const SymbolTable &symbol_table) {
   this->symbol_table_ = symbol_table;
 }
 
+ConstantPtr Interpreter::pop_move() {
+  auto result = std::move(stack_.back());
+  stack_.pop_back();
+  return result;
+}
+
 void Interpreter::run(const StackFrame &frame) {
   for (auto it = frame.begin; it != frame.end; ++it) {
     auto current_inst = *it;
@@ -29,9 +35,7 @@ void Interpreter::run(const StackFrame &frame) {
 
     case Opcode::Load: {
       auto offset = current_inst.get_integer_operand();
-      auto result = this->stack_[frame.slot_start + offset];
-
-      stack_.push_back(result);
+      stack_.push_back(this->stack_[frame.slot_start + offset]);
 
       break;
     }
@@ -45,8 +49,7 @@ void Interpreter::run(const StackFrame &frame) {
 
     case Opcode::StoreGlobal: {
       auto symbol = current_inst.get_string_operand();
-      symbol_table_[symbol] = stack_.back();
-      stack_.pop_back();
+      symbol_table_[symbol] = this->pop_move();
 
       break;
     }
@@ -54,8 +57,7 @@ void Interpreter::run(const StackFrame &frame) {
     case Opcode::Call: {
       auto given_arity = current_inst.get_integer_operand();
 
-      auto callee = stack_.back();
-      stack_.pop_back();
+      auto callee = this->pop_move();
 
       if (callee->type == ConstantType::Function) {
         auto func_object = static_cast<const ConstFunc *>(callee.get())->value;
@@ -72,13 +74,13 @@ void Interpreter::run(const StackFrame &frame) {
             StackFrame{func_object.const_table(), func_object.code().cbegin(),
                        func_object.code().cend(), stack_.size() - given_arity});
 
-        auto result = stack_.back();
+        auto result = this->pop_move();
 
-        for (std::size_t i = 0; i <= given_arity; i++) {
+        for (std::size_t i = 0; i < given_arity; i++) {
           stack_.pop_back();
         }
 
-        stack_.push_back(result);
+        stack_.push_back(std::move(result));
       } else {
         throw TypeException(type_to_string(callee->type) +
                             " 타입의 값은 호출 가능하지 않습니다.");
@@ -93,8 +95,8 @@ void Interpreter::run(const StackFrame &frame) {
     }
 
     case Opcode::PopJmpIfFalse: {
-      auto object = stack_.back();
-      stack_.pop_back();
+      auto object = this->pop_move();
+
       if (object->type == ConstantType::Boolean) {
         auto value = static_cast<const ConstBoolean *>(object.get())->value;
 
@@ -109,8 +111,7 @@ void Interpreter::run(const StackFrame &frame) {
     }
 
     case Opcode::Negate: {
-      auto object = stack_.back();
-      stack_.pop_back();
+      auto object = this->pop_move();
 
       stack_.push_back(
           -(*object)); // FIX: Boolean에 대한 negate 연산은 분리되어야함.
@@ -118,10 +119,8 @@ void Interpreter::run(const StackFrame &frame) {
     }
 
     default: { // 이항 연산 인스트럭션들
-      auto rhs_ptr = stack_.back();
-      stack_.pop_back();
-      auto lhs_ptr = stack_.back();
-      stack_.pop_back();
+      auto rhs_ptr = this->pop_move();
+      auto lhs_ptr = this->pop_move();
 
       const auto &lhs = *lhs_ptr;
       const auto &rhs = rhs_ptr.get();
@@ -156,7 +155,7 @@ void Interpreter::run(const StackFrame &frame) {
     }
   }
 
-  if (!stack_.empty())
-    stack_.back()->dump();
+  // if (!stack_.empty())
+  //   stack_.back()->dump();
 }
 } // namespace haneul

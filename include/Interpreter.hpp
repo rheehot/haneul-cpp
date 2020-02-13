@@ -18,6 +18,8 @@ private:
   SymbolTable symbol_table_;
   std::vector<ConstantPtr> stack_;
 
+  ConstantPtr pop_move();
+
 public:
   Interpreter(const SymbolTable &symbol_table);
 
