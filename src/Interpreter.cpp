@@ -62,9 +62,9 @@ void Interpreter::run(const StackFrame &frame) {
       const auto callee = this->pop_move();
 
       if (callee->type == ConstantType::Function) {
-        const auto func_object =
-            static_cast<const ConstFunc *>(callee.get())->value;
-        const auto actual_arity = func_object.arity();
+        const auto func_constant = static_cast<const ConstFunc *>(callee.get());
+        const auto func_object = func_constant->value;
+        const auto actual_arity = func_constant->arity();
 
         if (given_arity != actual_arity) {
           throw InterpreterException(

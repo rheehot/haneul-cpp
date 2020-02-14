@@ -91,11 +91,10 @@ bool Parser::parse_boolean() {
 }
 
 FuncObject Parser::parse_func_object() {
-  auto arity = this->consume<uint8_t>();
   auto const_table = this->parse_list([&] { return parse_constant(); });
   auto code = this->parse_list([&] { return parse_instruction(); });
 
-  return FuncObject(arity, code, const_table);
+  return FuncObject(code, const_table);
 }
 
 Instruction Parser::parse_instruction() {
@@ -137,7 +136,8 @@ ConstantPtr Parser::parse_constant() {
   case ConstantType::Boolean:
     return std::make_shared<ConstBoolean>(this->parse_boolean());
   case ConstantType::Function:
-    return std::make_shared<ConstFunc>(this->parse_func_object());
+    auto arity = this->consume<uint8_t>();
+    return std::make_shared<ConstFunc>(arity, this->parse_func_object());
   }
 }
 
