@@ -24,8 +24,7 @@ int main(int argc, char **argv) {
   //   inst.dump();
   // }
 
-  haneul::NativeFunc::FuncType print_func =
-      [](auto args) -> haneul::ConstantPtr {
+  haneul::NativeFunc::FuncType print_func = [](auto args) {
     args[0]->dump();
     return std::make_shared<haneul::ConstNone>();
   };

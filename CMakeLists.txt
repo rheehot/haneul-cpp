@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.8)
-# set (CMAKE_CXX_STANDARD 17)
+
+find_package(Boost 1.72 REQUIRED)
 
 project (haneul)
 
@@ -16,3 +17,6 @@ include_directories(include)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_executable(haneul-exe ${SOURCES})
+
+target_link_libraries(haneul-exe LINK_PUBLIC Boost::headers)
+
