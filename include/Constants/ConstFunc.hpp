@@ -1,11 +1,15 @@
+#include <variant>
+
 #include "Constant.hpp"
 #include "FuncObject.hpp"
 #include "Instruction.hpp"
+#include "NativeFunc.hpp"
 #include "Value.hpp"
 
 namespace haneul {
 
-class ConstFunc : public Constant, public Value<FuncObject> {
+class ConstFunc : public Constant,
+                  public Value<std::variant<FuncObject, NativeFunc>> {
 private:
   uint8_t arity_;
 

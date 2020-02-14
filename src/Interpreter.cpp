@@ -61,17 +61,23 @@ void Interpreter::run(const StackFrame &frame) {
 
       const auto callee = this->pop_move();
 
-      if (callee->type == ConstantType::Function) {
-        const auto func_constant = static_cast<const ConstFunc *>(callee.get());
-        const auto func_object = func_constant->value;
-        const auto actual_arity = func_constant->arity();
+      if (callee->type != ConstantType::Function) {
+        throw TypeException(type_to_string(callee->type) +
+                            " 타입의 값은 호출 가능하지 않습니다.");
+      }
 
-        if (given_arity != actual_arity) {
-          throw InterpreterException(
-              "이 함수는 " + std::to_string(actual_arity) +
-              "개의 인수를 받지만 " + std::to_string(given_arity) +
-              "개의 인수가 주어졌습니다.");
-        }
+      const auto func_constant = static_cast<const ConstFunc *>(callee.get());
+      const auto actual_arity = func_constant->arity();
+
+      if (given_arity != actual_arity) {
+        throw InterpreterException("이 함수는 " + std::to_string(actual_arity) +
+                                   "개의 인수를 받지만 " +
+                                   std::to_string(given_arity) +
+                                   "개의 인수가 주어졌습니다.");
+      }
+
+      if (std::holds_alternative<FuncObject>(func_constant->value)) {
+        const auto func_object = std::get<FuncObject>(func_constant->value);
 
         this->run(
             StackFrame{func_object.const_table(), func_object.code().cbegin(),
@@ -85,8 +91,17 @@ void Interpreter::run(const StackFrame &frame) {
 
         stack_.push_back(std::move(result));
       } else {
-        throw TypeException(type_to_string(callee->type) +
-                            " 타입의 값은 호출 가능하지 않습니다.");
+        const auto native_func = std::get<NativeFunc>(func_constant->value);
+
+        std::vector<ConstantPtr> args;
+
+        for (std::size_t i = 0; i < given_arity; i++) {
+          args.push_back(this->pop_move());
+        }
+
+        const auto result = native_func.func()(args);
+
+        stack_.push_back(result);
       }
 
       break;
