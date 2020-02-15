@@ -91,11 +91,10 @@ bool Parser::parse_boolean() {
 }
 
 FuncObject Parser::parse_func_object() {
-  auto arg_names = this->parse_list([&] { return parse_string(); });
   auto const_table = this->parse_list([&] { return parse_constant(); });
   auto code = this->parse_list([&] { return parse_instruction(); });
 
-  return FuncObject(arg_names, code, const_table);
+  return FuncObject(code, const_table);
 }
 
 Instruction Parser::parse_instruction() {
@@ -103,26 +102,22 @@ Instruction Parser::parse_instruction() {
   auto opcode_index = this->consume<uint8_t>();
 
   auto opcode = static_cast<Opcode>(opcode_index);
-  Instruction::OperandType operand;
 
   switch (opcode) {
   case Opcode::Push:
   case Opcode::Call:
   case Opcode::Jmp:
   case Opcode::PopJmpIfFalse: // 정수형 operand를 가지는 인스트럭션들
-    operand = this->consume<uint32_t>();
-    break;
+  case Opcode::Load:
+    return Instruction(line_number, opcode, this->consume<uint32_t>());
 
-  case Opcode::Store:
-  case Opcode::Load: // 문자열 operand를 가지는 인스트럭션들
-    operand = this->parse_string();
-    break;
+  case Opcode::LoadGlobal:
+  case Opcode::StoreGlobal: // 문자열 operand를 가지는 인스트럭션들
+    return Instruction(line_number, opcode, this->parse_string());
 
   default:
-    operand = std::monostate();
+    return Instruction(line_number, opcode);
   }
-
-  return Instruction(line_number, opcode, operand);
 }
 
 ConstantPtr Parser::parse_constant() {
@@ -141,7 +136,8 @@ ConstantPtr Parser::parse_constant() {
   case ConstantType::Boolean:
     return std::make_shared<ConstBoolean>(this->parse_boolean());
   case ConstantType::Function:
-    return std::make_shared<ConstFunc>(this->parse_func_object());
+    auto arity = this->consume<uint8_t>();
+    return std::make_shared<ConstFunc>(arity, this->parse_func_object());
   }
 }
 

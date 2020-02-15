@@ -5,20 +5,14 @@
 namespace haneul {
 void FuncObject::dump() const {
   std::cout << "FuncObject(" << std::endl;
-  std::cout << "args: ";
-  for (auto arg : this->arg_names_) {
-    std::cout << arg << ", ";
-  }
-  std::cout << std::endl;
-
   std::cout << "const table: " << std::endl;
-  for (const auto &c : this->const_table_) {
+  for (const auto &c : this->const_table()) {
     std::cout << "   ";
     c->dump();
   }
 
   std::cout << "code: " << std::endl;
-  for (auto inst : this->code_) {
+  for (auto inst : this->code()) {
     std::cout << "   ";
     inst.dump();
   }

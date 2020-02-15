@@ -16,6 +16,8 @@ enum class ConstantType : uint8_t {
   Function
 };
 
+std::string type_to_string(const ConstantType &type);
+
 TypeException make_binary_type_exception(ConstantType lhs, ConstantType rhs,
                                          const std::string &operation);
 TypeException make_unary_type_exception(ConstantType type,

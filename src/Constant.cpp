@@ -3,7 +3,7 @@
 #include "Constant.hpp"
 
 namespace haneul {
-std::string typeto_string(const ConstantType &type) {
+std::string type_to_string(const ConstantType &type) {
   switch (type) {
   case ConstantType::None:
     return "(없음)";
@@ -22,13 +22,13 @@ std::string typeto_string(const ConstantType &type) {
 
 TypeException make_binary_typeexception(ConstantType lhs, ConstantType rhs,
                                         const std::string &operation) {
-  return TypeException(typeto_string(lhs) + "와(과) " + typeto_string(rhs) +
+  return TypeException(type_to_string(lhs) + "와(과) " + type_to_string(rhs) +
                        "은(는) " + operation + " 연산을 지원하지 않습니다.");
 }
 TypeException make_unary_typeexception(ConstantType type,
                                        const std::string &operation) {
 
-  return TypeException(typeto_string(type) + "은(는) " + operation +
+  return TypeException(type_to_string(type) + "은(는) " + operation +
                        " 연산을 지원하지 않습니다.");
 }
 

@@ -7,24 +7,30 @@
 #include "Instruction.hpp"
 
 namespace haneul {
-struct StackFrame final {
-  ConstantList const_table;
-};
+struct StackFrame;
 
 class Interpreter final {
 public:
-  using SymbolTable = std::multimap<std::string, ConstantPtr>;
+  using SymbolTable = std::map<std::string, ConstantPtr>;
   using CodeIterator = Code::const_iterator;
 
 private:
-  std::stack<StackFrame> call_stack_;
   SymbolTable symbol_table_;
+  std::vector<ConstantPtr> stack_;
 
-  StackFrame current_frame();
+  ConstantPtr pop_move();
 
 public:
-  Interpreter(const ConstantList &const_table, const SymbolTable &symbol_table);
+  Interpreter(const SymbolTable &symbol_table);
 
-  void run(CodeIterator begin, CodeIterator end);
+  void run(const StackFrame &frame);
 };
+
+struct StackFrame final {
+  ConstantList const_table;
+  Interpreter::CodeIterator begin;
+  Interpreter::CodeIterator end;
+  std::size_t slot_start;
+};
+
 } // namespace haneul
